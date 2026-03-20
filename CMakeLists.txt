@@ -27,4 +27,6 @@ add_executable(SimTests
     simulationController.cpp)
 
 target_link_libraries(SimTests gtest_main)
-add_test(NAME SimTests COMMAND SimTests)
+
+include(GoogleTest)
+gtest_discover_tests(SimTests)

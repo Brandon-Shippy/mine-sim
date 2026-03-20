@@ -26,6 +26,7 @@ int main(int argc, char *argv[])
     // Set up our pools — vectors own the objects by value, no heap allocation needed after setup
     // simulationController owns setting up and creating our objects
     // We know how many trucks and sites there are on runtime, so we need no dynamic allocations
+    // This is due to RAII and that the vectors will automatically call its destructor
     //-------------------------------------------------------------------------------------------
     std::vector<MiningTruck> truckPool;
     std::vector<UnloadSite> sitePool;

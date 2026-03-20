@@ -34,6 +34,10 @@ Trucks cycle through four events:
 
 **Event-driven over tick-based** — eliminates unnecessary iterations. For 5 trucks over 4,320 minutes the difference is minor, but the approach scales correctly and reflects how discrete-event simulators are built in practice.
 
+**Reserve before pool construction** — truckPool.reserve(n) and sitePool.reserve(m) pre-allocate the exact buffer size before any emplace_back calls. This eliminates all reallocation and object-copying during setup, and guarantees pointer/reference stability so references taken during the sim loop (MiningTruck &currTruck = truckPool[...]) are never invalidated.
+
+**emplace_back over push_back** — objects are constructed directly in-place inside the vector's buffer rather than constructed elsewhere and then copied/moved in.
+
 **Station priority queue** — a second min-heap tracks when each station's backlog clears (`freeAt`). When a truck arrives, it always picks the station that will be free soonest in O(log m) time, replacing a linear scan.
 
 **Value semantics** — `std::vector<MiningTruck>` and `std::vector<UnloadSite>` own objects directly. All pool sizes are known at startup, so zero heap allocations occur during the sim loop.

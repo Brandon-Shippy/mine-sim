@@ -10,6 +10,10 @@ SimulationController::SimulationController()
 
 SimulationController::~SimulationController() {}
 
+//-------------------------------------------------------------------------------------------
+// We need to use reserve here to prevent re-allocation during runtime
+// If it gets realloacted all the references become dangling, so reserve gurantees us it wont change
+//-------------------------------------------------------------------------------------------
 void SimulationController::setSimulationTrucks(std::vector<MiningTruck> &truckPool, int amtTrucks)
 {
     truckPool.reserve(amtTrucks);

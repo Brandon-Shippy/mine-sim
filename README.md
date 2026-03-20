@@ -21,20 +21,20 @@ At the end of the run, per-truck and per-station statistics are printed to stdou
 
 ## Approach
 
-The simulation uses an **event-driven architecture** rather than a minute-by-minute tick loop. Instead of iterating all 4,320 minutes and checking every truck each step, the simulation maintains a min-heap of future events ordered by sim time. Each event schedules the next event for that truck, so the loop only executes O(events) iterations — one per state transition — rather than O(minutes × trucks).
+The simulation uses an **event-driven architecture** rather than a minute-by-minute tick loop. The simulation maintains a min-heap of future events ordered by sim time. Each event schedules the next event for that truck, so the loop only executes O(events) iterations — one per state transition — rather than O(minutes × trucks).
 
 Trucks cycle through four events:
 
-1. `DONE_MINING` — truck finished mining, begins transit to a station
-2. `ARRIVED_AT_STATION` — truck arrives and is assigned to the soonest-free station
-3. `DONE_UNLOADING` — truck finishes unloading, begins transit back to the mine
-4. `ARRIVED_AT_MINE` — truck arrives at the mine and draws a new random mining duration
+1. `DONE_MINING`  truck finished mining, begins transit to a station
+2. `ARRIVED_AT_STATION`  truck arrives and is assigned to the soonest-free station
+3. `DONE_UNLOADING`  truck finishes unloading, begins transit back to the mine
+4. `ARRIVED_AT_MINE`  truck arrives at the mine and draws a new random mining duration
 
 ## Design Choices
 
-**Event-driven over tick-based** — eliminates unnecessary iterations. For 5 trucks over 4,320 minutes the difference is minor, but the approach scales correctly and reflects how discrete-event simulators are built in practice.
+**Event-driven over tick-based** — eliminates unnecessary iterations
 
-**Reserve before pool construction** — truckPool.reserve(n) and sitePool.reserve(m) pre-allocate the exact buffer size before any emplace_back calls. This eliminates all reallocation and object-copying during setup, and guarantees pointer/reference stability so references taken during the sim loop (MiningTruck &currTruck = truckPool[...]) are never invalidated.
+**Reserve before pool construction** — truckPool.reserve(n) and sitePool.reserve(m) pre-allocate the exact buffer size before any emplace_back calls.
 
 **emplace_back over push_back** — objects are constructed directly in-place inside the vector's buffer rather than constructed elsewhere and then copied/moved in.
 

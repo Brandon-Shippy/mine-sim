@@ -84,7 +84,9 @@ flowchart TD
 
 ## What I would do if I had more time
 
-- **Config loading for timings, trucks and sites** — create a customizeable config to read in these values on start
-- **CSV or JSON stats output** — make it easy to pipe results into analysis tools or plot efficiency curves across different truck/site ratios
-- **Multiple runs with aggregated stats** — run the simulation k times with different seeds and report mean/stddev per metric to characterize steady-state behavior
-- **Station wait-time histogram** — track the distribution of queue wait times per station, not just totals, to identify bottlenecks under different configurations
+- **Config loading for timings, trucks and sites**, create a customizeable config to read in these values on start
+- **CSV or JSON stats output**, make it easy to pipe results into analysis tools or plot efficiency curves across different truck/site ratios
+- **Multiple runs with aggregated stats**, run the simulation k times with different seeds and report mean/stddev per metric to characterize steady-state behavior
+- **Station wait-time histogram**, track the distribution of queue wait times per station, not just totals, to identify bottlenecks under different configurations
+- **Cap summary percentages**, if you used a strange ratio like 10000 trucks to 5 unload stations the wait times will exceed 100%. This is because of the way we are calculating the percentages using the station's queue freeAt
+- **Move the event structs out of main**, I would re-organize the structure to moves these outside of main. Doing so will allow them to be testable and more readable overall

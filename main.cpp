@@ -7,12 +7,14 @@
 #include <queue>
 #include <algorithm>
 
-int main()
+int main(int argc, char *argv[])
 {
     //-------------------------------------------------------------------------------------------
-    // Our constants, can add I/O to edit at runtime
+    // Accept optional CLI args: ./MiningSimulation <num_trucks> <num_sites>
+    // Falls back to defaults if not provided
     //-------------------------------------------------------------------------------------------
-    const int NUM_TRUCKS = 5, NUM_SITES = 3;
+    const int NUM_TRUCKS = (argc > 1) ? std::stoi(argv[1]) : 5;
+    const int NUM_SITES = (argc > 2) ? std::stoi(argv[2]) : 3;
     const int SIM_DURATION = 4320; // 72 hours in minutes
     const int TRAVEL_TIME = 30;
     const int UNLOAD_TIME = 5;

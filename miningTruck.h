@@ -2,11 +2,11 @@
 
 enum class TruckState
 {
-    MINING               = 0,
+    MINING = 0,
     IN_TRANSIT_TO_UNLOAD = 1,
-    WAITING_FOR_UNLOAD   = 2, // Waiting in line at a station
-    UNLOADING            = 3,
-    IN_TRANSIT_TO_MINE   = 4
+    WAITING_FOR_UNLOAD = 2, // Waiting in line at a station
+    UNLOADING = 3,
+    IN_TRANSIT_TO_MINE = 4
 };
 
 class MiningTruck
@@ -34,12 +34,19 @@ public:
 
     void printStats(int totalSimMinutes);
 
+    // Stat getters — used by tests to assert on accumulated values
+    int getLoadsCompleted() const;
+    int getMinutesMining() const;
+    int getMinutesTransit() const;
+    int getMinutesWaiting() const;
+    int getMinutesUnloading() const;
+
 private:
     const int m_truckID; // Unique identifier no need for setter, set in constructor
     TruckState m_status;
-    int m_loadsCompleted  = 0;
-    int m_minutesMining   = 0;
-    int m_minutesTransit  = 0;
-    int m_minutesWaiting  = 0;
+    int m_loadsCompleted = 0;
+    int m_minutesMining = 0;
+    int m_minutesTransit = 0;
+    int m_minutesWaiting = 0;
     int m_minutesUnloading = 0;
 };

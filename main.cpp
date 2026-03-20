@@ -9,8 +9,10 @@
 
 int main()
 {
-    // Edit this based off of user input
-    const int numOfTrucks = 5, numOfSites = 3;
+    //-------------------------------------------------------------------------------------------
+    // Our constants, can add I/O to edit at runtime
+    //-------------------------------------------------------------------------------------------
+    const int NUM_TRUCKS = 5, NUM_SITES = 3;
     const int SIM_DURATION = 4320; // 72 hours in minutes
     const int TRAVEL_TIME = 30;
     const int UNLOAD_TIME = 5;
@@ -25,8 +27,8 @@ int main()
     //-------------------------------------------------------------------------------------------
     std::vector<MiningTruck> truckPool;
     std::vector<UnloadSite> sitePool;
-    simulationController.setSimulationTrucks(truckPool, numOfTrucks);
-    simulationController.setSimulationUnloadSites(sitePool, numOfSites);
+    simulationController.setSimulationTrucks(truckPool, NUM_TRUCKS);
+    simulationController.setSimulationUnloadSites(sitePool, NUM_SITES);
 
     //-------------------------------------------------------------------------------------------
     // These will be our events that will go onto our priority queue
@@ -86,7 +88,7 @@ int main()
 
     std::priority_queue<StationEntry, std::vector<StationEntry>, StationComparator> stationQueue;
 
-    for (int i = 0; i < numOfSites; i++)
+    for (int i = 0; i < NUM_SITES; i++)
         stationQueue.push({0, i}); // All stations free at t=0
 
     //-------------------------------------------------------------------------------------------

@@ -25,22 +25,30 @@ void MiningTruck::goMining()
     m_status = TruckState::MINING;
 }
 
-void MiningTruck::recordMining(int minutes)   { m_minutesMining    += minutes; }
-void MiningTruck::recordTransit(int minutes)  { m_minutesTransit   += minutes; }
-void MiningTruck::recordWaiting(int minutes)  { m_minutesWaiting   += minutes; }
-void MiningTruck::recordUnloading(int minutes){ m_minutesUnloading += minutes; }
-void MiningTruck::recordLoad()                { m_loadsCompleted++; }
+void MiningTruck::recordMining(int minutes) { m_minutesMining += minutes; }
+void MiningTruck::recordTransit(int minutes) { m_minutesTransit += minutes; }
+void MiningTruck::recordWaiting(int minutes) { m_minutesWaiting += minutes; }
+void MiningTruck::recordUnloading(int minutes) { m_minutesUnloading += minutes; }
+void MiningTruck::recordLoad() { m_loadsCompleted++; }
+
+// For tests
+int MiningTruck::getLoadsCompleted() const { return m_loadsCompleted; }
+int MiningTruck::getMinutesMining() const { return m_minutesMining; }
+int MiningTruck::getMinutesTransit() const { return m_minutesTransit; }
+int MiningTruck::getMinutesWaiting() const { return m_minutesWaiting; }
+int MiningTruck::getMinutesUnloading() const { return m_minutesUnloading; }
 
 void MiningTruck::printStats(int totalSimMinutes)
 {
-    auto pct = [&](int minutes) { return (100.0 * minutes) / totalSimMinutes; };
+    auto pct = [&](int minutes)
+    { return (100.0 * minutes) / totalSimMinutes; };
 
     std::cout << std::fixed << std::setprecision(1);
     std::cout << "  Truck " << m_truckID
-              << " | Loads: "     << m_loadsCompleted
-              << " | Mining: "    << pct(m_minutesMining)    << "%"
-              << " | Transit: "   << pct(m_minutesTransit)   << "%"
-              << " | Waiting: "   << pct(m_minutesWaiting)   << "%"
+              << " | Loads: " << m_loadsCompleted
+              << " | Mining: " << pct(m_minutesMining) << "%"
+              << " | Transit: " << pct(m_minutesTransit) << "%"
+              << " | Waiting: " << pct(m_minutesWaiting) << "%"
               << " | Unloading: " << pct(m_minutesUnloading) << "%"
               << "\n";
 }
